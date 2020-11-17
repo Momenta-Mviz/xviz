@@ -13,7 +13,7 @@
     "jsonlint": false
   },
   "scripts": {
-    "bootstrap": "yarn && ocular-bootstrap",
+    "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
     "bench": "ocular-test bench",
     "build": "ocular-clean && yarn build-schema && lerna run pre-build && ocular-build",
     "build-schema": "cd modules/schema && yarn build",
@@ -23,12 +23,16 @@
     "publish": "ocular-publish",
     "test": "ocular-test",
     "test-fast": "ocular-test fast",
-    "test-ci": "ocular-test cover && (cat coverage/lcov.info | coveralls)"
+    "test-ci": "ocular-test cover && (cat coverage/lcov.info | coveralls)",
+    "cover-html": "ocular-test cover && npx nyc report --reporter=html && open coverage/index.html"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@probe.gl/bench": "^3.0.1",
-    "@probe.gl/test-utils": "^3.0.1",
+    "@loaders.gl/core": "^2.2.6",
+    "@loaders.gl/gltf": "^2.2.6",
+    "@loaders.gl/polyfills": "^2.2.6",
+    "@probe.gl/bench": "^3.1.0",
+    "@probe.gl/test-utils": "^3.1.0",
     "ajv": "^6.5.2",
     "ajv-cli": "^3.0.0",
     "babel-loader": "^8.0.0",
@@ -38,7 +42,7 @@
     "cross-spawn": "^6.0.5",
     "json-diff": "^0.5.4",
     "jsonlint": "^1.6.3",
-    "ocular-dev-tools": "0.0.27",
+    "ocular-dev-tools": "0.1.9",
     "pre-commit": "^1.2.2",
     "protobufjs": "https://github.com/jlisee/protobuf.js#ed8e699671da6f9a169074aa0f2a160cefe0844a",
     "reify": "^0.18.1",

@@ -23,6 +23,7 @@ import {XVIZBuilder} from '@xviz/builder';
 
 const builder = new XVIZBuilder();
 
+// prettier-ignore
 builder
   .pose()
   .timestamp(ts1);
@@ -32,9 +33,9 @@ builder
   .polygon([[0, 0, 0], [4, 0, 0], [4, 3, 0]]);
 
 // Validate it
-import {XVIZValidator} from '@xviz/schema;
+import {XVIZValidator} from '@xviz/schema';
 
 const validator = new XVIZValidator();
 
-validator.validateStateUpdate(builder.getMessage())
+validator.validateStateUpdate(builder.getMessage());
 ```
