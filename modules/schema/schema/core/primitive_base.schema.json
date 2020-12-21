@@ -19,6 +19,12 @@
       },
       "minItems": 1,
       "additionalItems": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }

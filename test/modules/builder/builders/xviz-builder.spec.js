@@ -177,6 +177,7 @@ test('XVIZBuilder#polygon', t => {
     .primitive('/test/polygon')
     .polygon(verts)
     .id('1')
+    .tags(['a', 'cucumber', 'b'])
     .style({
       fill_color: [255, 0, 0]
     });
@@ -197,7 +198,8 @@ test('XVIZBuilder#polygon', t => {
                   style: {
                     fill_color: [255, 0, 0]
                   },
-                  object_id: '1'
+                  object_id: '1',
+                  tags: ['a', 'cucumber', 'b']
                 },
                 vertices: verts
               }

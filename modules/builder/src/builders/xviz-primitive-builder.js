@@ -194,6 +194,14 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     return this;
   }
 
+  tags(tagList) {
+    this._validatePrerequisite();
+    this.validatePropSetOnce('_tags');
+
+    this._tags = tagList;
+    return this;
+  }
+
   _validate() {
     super._validate();
 
@@ -310,6 +318,11 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
       base.classes = this._classes;
     }
 
+    if (this._tags) {
+      haveBase = true;
+      base.tags = this._tags;
+    }
+
     if (haveBase) {
       obj.base = base;
     }
@@ -334,5 +347,6 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     this._id = null;
     this._style = null;
     this._classes = null;
+    this._tags = null;
   }
 }
