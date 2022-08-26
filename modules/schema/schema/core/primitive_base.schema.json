@@ -25,6 +25,12 @@
       "items": {
         "type": "string"
       }
+    },
+    "subcategories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }

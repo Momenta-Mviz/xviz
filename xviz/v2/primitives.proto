@@ -24,6 +24,7 @@ message PrimitiveBase {
   repeated string classes = 2;
   StyleObjectValue style = 3;
   repeated string tags = 4;
+  repeated string subcategories = 5;
 }
 
 message Circle {

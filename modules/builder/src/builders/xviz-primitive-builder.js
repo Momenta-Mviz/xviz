@@ -202,6 +202,14 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     return this;
   }
 
+  subcategories(subcategoryList) {
+    this._validatePrerequisite();
+    this.validatePropSetOnce('_subcategories');
+
+    this._subcategories = subcategoryList;
+    return this;
+  }
+
   _validate() {
     super._validate();
 
@@ -323,6 +331,11 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
       base.tags = this._tags;
     }
 
+    if (this._subcategories) {
+      haveBase = true;
+      base.subcategories = this._subcategories;
+    }
+
     if (haveBase) {
       obj.base = base;
     }
@@ -348,5 +361,6 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     this._style = null;
     this._classes = null;
     this._tags = null;
+    this._subcategories = null;
   }
 }

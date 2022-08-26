@@ -178,6 +178,7 @@ test('XVIZBuilder#polygon', t => {
     .polygon(verts)
     .id('1')
     .tags(['a', 'cucumber', 'b'])
+    .subcategories(['/xxx/yyy', '/aaa/bb/c'])
     .style({
       fill_color: [255, 0, 0]
     });
@@ -199,7 +200,8 @@ test('XVIZBuilder#polygon', t => {
                     fill_color: [255, 0, 0]
                   },
                   object_id: '1',
-                  tags: ['a', 'cucumber', 'b']
+                  tags: ['a', 'cucumber', 'b'],
+                  subcategories: ['/xxx/yyy', '/aaa/bb/c']
                 },
                 vertices: verts
               }
