@@ -9,6 +9,9 @@
     },
     "vertices": {
       "$ref": "https://xviz.org/schema/math/point3d_list.schema.json"
+    },
+    "high_precision_vertices": {
+      "$ref": "https://xviz.org/schema/math/point3d_list.schema.json"
     }
   },
   "required": [ "vertices" ],

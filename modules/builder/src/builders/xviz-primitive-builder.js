@@ -210,6 +210,11 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     return this;
   }
 
+  useHighPrecision(e) {
+    if (e) this._useHighPrecision = true;
+    return this;
+  }
+
   _validate() {
     super._validate();
 
@@ -279,29 +284,36 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
       case 'polygon':
       case 'polyline':
         obj.vertices = this._vertices;
+        if (this._useHighPrecision) obj.high_precision_vertices = this._vertices;
         break;
       case 'point':
         if (this._colors) {
           obj.colors = this._colors;
         }
         obj.points = this._vertices;
+        if (this._useHighPrecision) obj.high_precision_points = this._vertices;
         break;
       case 'text':
         obj.position = this._vertices[0];
+        if (this._useHighPrecision) obj.high_precision_position = this._vertices[0];
         obj.text = this._text;
         break;
       case 'circle':
         obj.center = this._vertices[0];
+        if (this._useHighPrecision) obj.high_precision_center = this._vertices[0];
         obj.radius = this._radius;
         break;
       case 'stadium':
         obj.start = this._vertices[0];
         obj.end = this._vertices[1];
+        if (this._useHighPrecision) obj.high_precision_start = this._vertices[0];
+        if (this._useHighPrecision) obj.high_precision_end = this._vertices[1];
         obj.radius = this._radius;
         break;
       case 'image':
         if (this._vertices) {
           this._image.position = this._vertices[0];
+        // if (this._useHighPrecision) this._image.high_precision_position = this._vertices[0];  // temp disable
         }
         Object.assign(obj, this._image);
         break;
@@ -362,5 +374,6 @@ export default class XVIZPrimitiveBuilder extends XVIZBaseBuilder {
     this._classes = null;
     this._tags = null;
     this._subcategories = null;
+    this._useHighPrecision = null;
   }
 }

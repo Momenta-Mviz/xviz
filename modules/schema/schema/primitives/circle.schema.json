@@ -15,6 +15,9 @@
     },
     "radius": {
       "type": "number"
+    },
+    "high_precision_center": {
+      "$ref": "https://xviz.org/schema/math/vector3x1.json"
     }
   },
   "required": [ "center", "radius" ],

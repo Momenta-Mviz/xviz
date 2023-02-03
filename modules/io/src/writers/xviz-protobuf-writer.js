@@ -210,7 +210,7 @@ function toColorArray(object) {
 /* eslint-disable complexity, no-else-return, max-statements */
 export function xvizConvertProtobuf(object, keyName) {
   if (Array.isArray(object)) {
-    if (!(keyName === 'vertices' || keyName === 'points' || keyName === 'colors')) {
+    if (!(keyName === 'vertices' || keyName === 'points' || keyName === 'high_precision_vertices' || keyName === 'high_precision_points' || keyName === 'colors')) {
       return object.map(element => xvizConvertProtobuf(element, keyName));
     }
 

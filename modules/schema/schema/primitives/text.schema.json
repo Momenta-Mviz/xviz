@@ -15,6 +15,9 @@
     },
     "text": {
       "type": "string"
+    },
+    "high_precision_position": {
+      "$ref": "https://xviz.org/schema/math/vector3x1.json"
     }
   },
   "required": [ "position", "text" ],

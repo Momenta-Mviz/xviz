@@ -25,6 +25,9 @@
     "height_px": {
       "type": "integer",
       "minValue": 0
+    },
+    "high_precision_position": {
+      "$ref": "https://xviz.org/schema/math/vector3x1.json"
     }
   },
   "required": [ "data", "width_px", "height_px" ],

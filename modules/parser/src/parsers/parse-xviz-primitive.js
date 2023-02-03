@@ -21,6 +21,7 @@ export const PRIMITIVE_CAT = {
   COMPONENT: 'components' // TODO(twojtasz): remove when v1 support is removed
 };
 
+/* eslint-disable complexity */
 // eslint-disable-next-line max-params
 export function normalizeXVIZPrimitive(
   PRIMITIVE_PROCCESSOR,
@@ -46,6 +47,11 @@ export function normalizeXVIZPrimitive(
   } = primitive;
 
   const {enableZOffset, validate, normalize} = PRIMITIVE_PROCCESSOR[primitiveType];
+
+  // double字段替换float
+  if (Object.keys(primitive).includes('vertices') && Object.keys(primitive).includes('high_precision_vertices')) primitive.vertices = Float64Array.from(primitive.high_precision_vertices);
+  if (Object.keys(primitive).includes('center') && Object.keys(primitive).includes('high_precision_center')) primitive.center = Float64Array.from(primitive.high_precision_center);
+  if (Object.keys(primitive).includes('position') && Object.keys(primitive).includes('high_precision_position')) primitive.position = Float64Array.from(primitive.high_precision_position);
 
   // Apply a small offset to 2d geometries to battle z fighting
   if (enableZOffset) {

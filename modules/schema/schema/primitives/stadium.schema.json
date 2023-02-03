@@ -15,6 +15,12 @@
     },
     "radius": {
       "type": "number"
+    },
+    "high_precision_start": {
+      "$ref": "https://xviz.org/schema/math/vector3x1.json"
+    },
+    "high_precision_end": {
+      "$ref": "https://xviz.org/schema/math/vector3x1.json"
     }
   },
   "required": [ "start", "end", "radius" ],

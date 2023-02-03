@@ -32,6 +32,9 @@
         }
       ],
       "additionalItems": false
+    },
+    "high_precision_points": {
+      "$ref": "https://xviz.org/schema/math/point3d_list.schema.json"
     }
   },
   "required": [ "points" ],
