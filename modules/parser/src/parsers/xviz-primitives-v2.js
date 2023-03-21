@@ -48,11 +48,11 @@ export default {
   polyline: {
     category: PRIMITIVE_CAT.FEATURE,
     validate: (primitive, streamName, time) => primitive.vertices && primitive.vertices.length >= 2,
-    normalize: primitive => {
+    normalize: (primitive, thres = undefined) => {
       // Filter out identical vertices to make sure we don't get rendering artifacts
       // in the path layer
       // TODO - handle this directly in deck.gl PathLayer
-      primitive.vertices = filterVertices(primitive.vertices);
+      primitive.vertices = filterVertices(primitive.vertices, thres);
       aliasId(primitive);
     }
   },

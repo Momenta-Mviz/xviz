@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 // Copyright (c) 2019 Uber Technologies, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,10 +49,30 @@ export function normalizeXVIZPrimitive(
 
   const {enableZOffset, validate, normalize} = PRIMITIVE_PROCCESSOR[primitiveType];
 
+  let isHighPrecision = false;
+
   // double字段替换float
-  if (Object.keys(primitive).includes('vertices') && Object.keys(primitive).includes('high_precision_vertices')) primitive.vertices = Float64Array.from(primitive.high_precision_vertices);
-  if (Object.keys(primitive).includes('center') && Object.keys(primitive).includes('high_precision_center')) primitive.center = Float64Array.from(primitive.high_precision_center);
-  if (Object.keys(primitive).includes('position') && Object.keys(primitive).includes('high_precision_position')) primitive.position = Float64Array.from(primitive.high_precision_position);
+  if (
+    Object.keys(primitive).includes('vertices') &&
+    Object.keys(primitive).includes('high_precision_vertices')
+  ) {
+    primitive.vertices = Float64Array.from(primitive.high_precision_vertices);
+    isHighPrecision = true;
+  }
+  if (
+    Object.keys(primitive).includes('center') &&
+    Object.keys(primitive).includes('high_precision_center')
+  ) {
+    primitive.center = Float64Array.from(primitive.high_precision_center);
+    isHighPrecision = true;
+  }
+  if (
+    Object.keys(primitive).includes('position') &&
+    Object.keys(primitive).includes('high_precision_position')
+  ) {
+    primitive.position = Float64Array.from(primitive.high_precision_position);
+    isHighPrecision = true;
+  }
 
   // Apply a small offset to 2d geometries to battle z fighting
   if (enableZOffset) {
@@ -82,7 +103,9 @@ export function normalizeXVIZPrimitive(
 
   // process
   if (normalize) {
-    normalize(primitive);
+    if (isHighPrecision) {
+      normalize(primitive, -10); // 0在计算经纬度结果时会有问题
+    } else normalize(primitive);
   }
 
   // post process

@@ -14,14 +14,14 @@
 
 import {Vector3} from 'math.gl';
 
-// import {getXVIZConfig} from '../config/xviz-config';
+import {getXVIZConfig} from '../config/xviz-config';
 
 // filter out identical vertices from a list
 // Ensure points at least a certain distance away from each other
 // This reduces data size and works around an issue in the deck.gl PathLayer
-export function filterVertices(vertices) {
-  // const THRESHOLD = getXVIZConfig().pathDistanceThreshold;
-  const THRESHOLD = -10; // 0在计算经纬度结果时会有问题
+export function filterVertices(vertices, thres = undefined) {
+  let THRESHOLD = getXVIZConfig().pathDistanceThreshold;
+  if (thres) THRESHOLD = thres
   const isFlatArray = Number.isFinite(vertices[0]);
   const vertexCount = isFlatArray ? vertices.length / 3 : vertices.length;
 
