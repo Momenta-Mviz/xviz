@@ -90,3 +90,47 @@ message Text {
   string text = 3;
   repeated double high_precision_position = 4;
 }
+
+message Conversion_circle {
+    option (xviz_json_schema) = "primitives/conversion_circle";
+    float count = 1;
+    repeated string object_ids = 2;
+    repeated float centers = 3;
+    repeated double high_precision_centers = 4;
+    float z_value = 5;
+    repeated float radius = 6;
+    repeated uint32 style_indexs = 7;
+    repeated uint32 class_indexs = 8;
+    repeated StyleObjectValue styles = 9;
+    repeated string classes = 10;
+}
+
+message Conversion_polyline {
+    option (xviz_json_schema) = "primitives/conversion_polyline";
+    float count = 1;
+    repeated string object_ids = 2;
+    repeated float vertices = 3;
+    repeated double high_precision_vertices = 4;
+    float z_value = 5;
+    repeated float radius = 6;
+    repeated uint32 style_indexs = 7;
+    repeated uint32 class_indexs = 8;
+    repeated StyleObjectValue styles = 9;
+    repeated string classes = 10;
+    repeated uint32 point_counts = 11;
+}
+
+message Conversion_polygons {
+    option (xviz_json_schema) = "primitives/conversion_polygons";
+    float count = 1;
+    repeated string object_ids = 2;
+    repeated float vertices = 3;
+    repeated double high_precision_vertices = 4;
+    float z_value = 5;
+    repeated float radius = 6;
+    repeated uint32 style_indexs = 7;
+    repeated uint32 class_indexs = 8;
+    repeated StyleObjectValue styles = 9;
+    repeated string classes = 10;
+    repeated uint32 point_counts = 11;
+}

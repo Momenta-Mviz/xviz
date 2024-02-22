@@ -24,7 +24,7 @@ import {
 import {XVIZMessage} from './xviz-message';
 import {TextDecoder} from './text-encoding';
 import {XVIZ_FORMAT} from './constants';
-
+import {conversion_message, d_conversion_message} from './conversion-message';
 // Represents raw xviz data and
 // can create an XVIZMessage
 //
@@ -36,8 +36,11 @@ import {XVIZ_FORMAT} from './constants';
 // - JSON object
 // - arraybuffer which is a GLB
 export class XVIZData {
-  constructor(data) {
-    this._data = data;
+  //conversion 是否需要对数据做一层转换
+  constructor(data, conversion = false) {
+    //这个标记的用意：如果是build阶段，获取message时就不在做d_conversion_message操作了
+    this.d_conversion = !conversion;
+    this._data = conversion ? conversion_message(data) : data;
 
     // _dataFormat is an XVIZ_FORMAT for 'data'
     this._dataFormat = undefined;
@@ -129,6 +132,11 @@ export class XVIZData {
         break;
       default:
         throw new Error(`Unsupported format ${this._dataFormat}`);
+    }
+
+    //逆转换数据
+    if (this.d_conversion) {
+      msg = d_conversion_message(msg);
     }
 
     const xvizMsg = new XVIZMessage(msg);
