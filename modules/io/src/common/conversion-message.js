@@ -55,6 +55,7 @@ export const conversion_message = message => {
         const {object_id = '', style = {}, classes = []} = base;
         circle_obj.count++;
         circle_obj.object_ids.push(object_id);
+
         if (center) {
           circle_obj.centers.push(center[0]);
           circle_obj.centers.push(center[1]);
@@ -62,7 +63,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_center) {
-          circle_obj.high_precision_center = [];
+          if(!circle_obj.high_precision_center) circle_obj.high_precision_center = [];
           circle_obj.high_precision_center.push(high_precision_center[0]);
           circle_obj.high_precision_center.push(high_precision_center[1]);
           circle_obj.z_value = high_precision_center[2];
@@ -110,7 +111,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_vertices) {
-          polyline_obj.high_precision_vertices = [];
+          if(!polyline_obj.high_precision_vertices) polyline_obj.high_precision_vertices = [];
           high_precision_vertices.forEach(point => {
             polyline_obj.high_precision_vertices.push(point[0]);
             polyline_obj.high_precision_vertices.push(point[1]);
@@ -159,7 +160,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_vertices) {
-          polygon_obj.high_precision_vertices = [];
+          if(!polygon_obj.high_precision_vertices) polygon_obj.high_precision_vertices = [];
           high_precision_vertices.forEach(point => {
             polygon_obj.high_precision_vertices.push(point[0]);
             polygon_obj.high_precision_vertices.push(point[1]);
@@ -225,7 +226,9 @@ export const d_conversion_message = message => {
           for (let k = 0; k < point_count; ++k) {
             const x = vertices.shift();
             const y = vertices.shift();
-            polyline.vertices.push([x, y, z_value]);
+            polyline.vertices.push(x);
+            polyline.vertices.push(y);
+            polyline.vertices.push(z_value);
           }
         }
         if (high_precision_vertices && high_precision_vertices.length) {
@@ -234,7 +237,9 @@ export const d_conversion_message = message => {
           for (let k = 0; k < point_count; ++k) {
             const x = high_precision_vertices.shift();
             const y = high_precision_vertices.shift();
-            polyline.high_precision_vertices.push([x, y, z_value]);
+            polyline.high_precision_vertices.push(x);
+            polyline.high_precision_vertices.push(y);
+            polyline.high_precision_vertices.push(z_value);
           }
         }
         polyline.base.object_id = object_ids[i] || '0';
@@ -242,6 +247,7 @@ export const d_conversion_message = message => {
         polyline.base.classes = JSON.parse(classes[class_indexs[i]]);
         primitive.polylines.push(polyline);
       }
+      delete primitive.conversion_polylines;
     }
 
     const conversion_polygons = primitive.conversion_polygons;
@@ -269,7 +275,9 @@ export const d_conversion_message = message => {
           for (let k = 0; k < point_count; ++k) {
             const x = vertices.shift();
             const y = vertices.shift();
-            polygon.vertices.push([x, y, z_value]);
+            polygon.vertices.push(x);
+            polygon.vertices.push(y);
+            polygon.vertices.push(z_value);
           }
         }
         if (high_precision_vertices && high_precision_vertices.length) {
@@ -278,7 +286,9 @@ export const d_conversion_message = message => {
           for (let k = 0; k < point_count; ++k) {
             const x = high_precision_vertices.shift();
             const y = high_precision_vertices.shift();
-            polygon.high_precision_vertices.push([x, y, z_value]);
+            polygon.high_precision_vertices.push(x);
+            polygon.high_precision_vertices.push(y);
+            polygon.high_precision_vertices.push(z_value);
           }
         }
         polygon.base.object_id = object_ids[i] || '0';
@@ -286,6 +296,7 @@ export const d_conversion_message = message => {
         polygon.base.classes = JSON.parse(classes[class_indexs[i]]);
         primitive.polygons.push(polygon);
       }
+      delete primitive.conversion_polygons;
     }
 
     const conversion_circles = primitive.conversion_circles;
@@ -324,6 +335,7 @@ export const d_conversion_message = message => {
         circle.base.classes = JSON.parse(classes[class_indexs[i]]);
         primitive.circles.push(circle);
       }
+      delete primitive.conversion_circles;
     }
   }
 

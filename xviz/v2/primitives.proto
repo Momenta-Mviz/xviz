@@ -120,8 +120,8 @@ message Conversion_polyline {
     repeated uint32 point_counts = 11;
 }
 
-message Conversion_polygons {
-    option (xviz_json_schema) = "primitives/conversion_polygons";
+message Conversion_polygon {
+    option (xviz_json_schema) = "primitives/conversion_polygon";
     float count = 1;
     repeated string object_ids = 2;
     repeated float vertices = 3;

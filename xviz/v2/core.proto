@@ -58,9 +58,9 @@ message PrimitiveState {
   repeated Point points = 5;
   repeated Stadium stadiums = 6;
   repeated Image images = 7;
-  Conversion_circle conversion_circle = 8;
-  Conversion_polyline conversion_polyline = 9;
-  Conversion_polygons conversion_polygons = 10;
+  Conversion_circle conversion_circles = 8;
+  Conversion_polyline conversion_polylines = 9;
+  Conversion_polygon conversion_polygons = 10;
 }
 
 message UIPrimitiveState {
