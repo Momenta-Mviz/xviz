@@ -22,7 +22,8 @@ const circleObj = {
   styles: [], //style列表
   style_indexs: [], //style索引值
   classes: [], //class列表
-  class_indexs: [] //class索引值
+  class_indexs: [], //class索引值
+  subcategories: []
 };
 
 //polyline/polygon数据结构一致
@@ -35,7 +36,8 @@ const polylineObj = {
   styles: [], //style列表
   style_indexs: [], //style索引值
   classes: [], //class列表
-  class_indexs: [] //class索引值
+  class_indexs: [], //class索引值
+  subcategories: []
 };
 
 /**
@@ -52,7 +54,7 @@ export const conversion_message = message => {
       const circle_obj = cloneDeep(circleObj);
       circles.forEach(item => {
         const {center, high_precision_center, radius, base} = item;
-        const {object_id = '', style = {}, classes = []} = base;
+        const {object_id = '', style = {}, classes = [], subcategories = []} = base;
         circle_obj.count++;
         circle_obj.object_ids.push(object_id);
 
@@ -63,7 +65,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_center) {
-          if(!circle_obj.high_precision_center) circle_obj.high_precision_center = [];
+          if (!circle_obj.high_precision_center) circle_obj.high_precision_center = [];
           circle_obj.high_precision_center.push(high_precision_center[0]);
           circle_obj.high_precision_center.push(high_precision_center[1]);
           circle_obj.z_value = high_precision_center[2];
@@ -86,7 +88,33 @@ export const conversion_message = message => {
           circle_obj.classes.push(classes_str);
           circle_obj.class_indexs.push(circle_obj.classes.length - 1);
         }
+
+        const subcategories_str = JSON.stringify(subcategories);
+        circle_obj.subcategories.push(subcategories_str);
       });
+      //移除空数据
+      const valid_id_index = circle_obj.object_ids.findIndex(item => item !== '');
+      if (valid_id_index == -1) {
+        circle_obj.object_ids = [];
+      }
+
+      const valid_subcategories_index = circle_obj.subcategories.findIndex(item => item !== '[]');
+      if (valid_subcategories_index == -1) {
+        circle_obj.subcategories = [];
+      }
+
+      const valid_style_index = circle_obj.styles.findIndex(item => !isEqual(item, {}));
+      if (valid_style_index == -1) {
+        circle_obj.styles = [];
+        circle_obj.style_indexs = [];
+      }
+
+      const valid_classes_index = circle_obj.classes.findIndex(item => item !== '[]');
+      if (valid_classes_index == -1) {
+        circle_obj.classes = [];
+        circle_obj.class_indexs = [];
+      }
+
       primitive.circles = [];
       primitive.conversion_circles = circle_obj;
     }
@@ -96,7 +124,7 @@ export const conversion_message = message => {
       const polyline_obj = cloneDeep(polylineObj);
       polylines.forEach((item, index) => {
         const {vertices, high_precision_vertices, base} = item;
-        const {object_id = '', style = {}, classes = []} = base;
+        const {object_id = '', style = {}, classes = [], subcategories = []} = base;
         polyline_obj.count++;
         polyline_obj.object_ids.push(object_id);
         let point_count = 0;
@@ -111,7 +139,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_vertices) {
-          if(!polyline_obj.high_precision_vertices) polyline_obj.high_precision_vertices = [];
+          if (!polyline_obj.high_precision_vertices) polyline_obj.high_precision_vertices = [];
           high_precision_vertices.forEach(point => {
             polyline_obj.high_precision_vertices.push(point[0]);
             polyline_obj.high_precision_vertices.push(point[1]);
@@ -136,7 +164,33 @@ export const conversion_message = message => {
           polyline_obj.classes.push(classes_str);
           polyline_obj.class_indexs.push(polyline_obj.classes.length - 1);
         }
+
+        const subcategories_str = JSON.stringify(subcategories);
+        polyline_obj.subcategories.push(subcategories_str);
       });
+      //移除空数据
+      const valid_id_index = polyline_obj.object_ids.findIndex(item => item !== '');
+      if (valid_id_index == -1) {
+        polyline_obj.object_ids = [];
+      }
+
+      const valid_subcategories_index = polyline_obj.subcategories.findIndex(item => item !== '[]');
+      if (valid_subcategories_index == -1) {
+        polyline_obj.subcategories = [];
+      }
+
+      const valid_style_index = polyline_obj.styles.findIndex(item => !isEqual(item, {}));
+      if (valid_style_index == -1) {
+        polyline_obj.styles = [];
+        polyline_obj.style_indexs = [];
+      }
+
+      const valid_classes_index = polyline_obj.classes.findIndex(item => item !== '[]');
+      if (valid_classes_index == -1) {
+        polyline_obj.classes = [];
+        polyline_obj.class_indexs = [];
+      }
+
       primitive.polylines = [];
       primitive.conversion_polylines = polyline_obj;
     }
@@ -146,7 +200,7 @@ export const conversion_message = message => {
       const polygon_obj = cloneDeep(polylineObj);
       polygons.forEach((item, index) => {
         const {vertices, high_precision_vertices, base} = item;
-        const {object_id = '', style = {}, classes = []} = base;
+        const {object_id = '', style = {}, classes = [], subcategories = []} = base;
         polygon_obj.count++;
         polygon_obj.object_ids.push(object_id);
         let point_count = 0;
@@ -160,7 +214,7 @@ export const conversion_message = message => {
         }
 
         if (high_precision_vertices) {
-          if(!polygon_obj.high_precision_vertices) polygon_obj.high_precision_vertices = [];
+          if (!polygon_obj.high_precision_vertices) polygon_obj.high_precision_vertices = [];
           high_precision_vertices.forEach(point => {
             polygon_obj.high_precision_vertices.push(point[0]);
             polygon_obj.high_precision_vertices.push(point[1]);
@@ -186,7 +240,33 @@ export const conversion_message = message => {
           polygon_obj.classes.push(classes_str);
           polygon_obj.class_indexs.push(polygon_obj.classes.length - 1);
         }
+
+        const subcategories_str = JSON.stringify(subcategories);
+        polygon_obj.subcategories.push(subcategories_str);
       });
+      //移除空数据
+      const valid_id_index = polygon_obj.object_ids.findIndex(item => item !== '');
+      if (valid_id_index == -1) {
+        polygon_obj.object_ids = [];
+      }
+
+      const valid_subcategories_index = polygon_obj.subcategories.findIndex(item => item !== '[]');
+      if (valid_subcategories_index == -1) {
+        polygon_obj.subcategories = [];
+      }
+
+      const valid_style_index = polygon_obj.styles.findIndex(item => !isEqual(item, {}));
+      if (valid_style_index == -1) {
+        polygon_obj.styles = [];
+        polygon_obj.style_indexs = [];
+      }
+
+      const valid_classes_index = polygon_obj.classes.findIndex(item => item !== '[]');
+      if (valid_classes_index == -1) {
+        polygon_obj.classes = [];
+        polygon_obj.class_indexs = [];
+      }
+
       primitive.polygons = [];
       primitive.conversion_polygons = polygon_obj;
     }
@@ -214,7 +294,8 @@ export const d_conversion_message = message => {
         styles,
         style_indexs,
         classes,
-        class_indexs
+        class_indexs,
+        subcategories
       } = conversion_polylines;
       for (let i = 0; i < count; ++i) {
         const polyline = {
@@ -242,9 +323,18 @@ export const d_conversion_message = message => {
             polyline.high_precision_vertices.push(z_value);
           }
         }
-        polyline.base.object_id = object_ids[i] || '0';
-        polyline.base.style = styles[style_indexs[i]];
-        polyline.base.classes = JSON.parse(classes[class_indexs[i]]);
+        if (object_ids && object_ids.length) {
+          polyline.base.object_id = object_ids[i] || '0';
+        }
+        if (styles && styles.length && style_indexs && style_indexs.length) {
+          polyline.base.style = styles[style_indexs[i]] || {};
+        }
+        if (classes && classes.length && class_indexs && class_indexs.length) {
+          polyline.base.classes = JSON.parse(classes[class_indexs[i]]);
+        }
+        if (subcategories && subcategories.length) {
+          polyline.base.subcategories = JSON.parse(subcategories[i]);
+        }
         primitive.polylines.push(polyline);
       }
       delete primitive.conversion_polylines;
@@ -263,7 +353,8 @@ export const d_conversion_message = message => {
         styles,
         style_indexs,
         classes,
-        class_indexs
+        class_indexs,
+        subcategories
       } = conversion_polygons;
       for (let i = 0; i < count; ++i) {
         const polygon = {
@@ -291,9 +382,19 @@ export const d_conversion_message = message => {
             polygon.high_precision_vertices.push(z_value);
           }
         }
-        polygon.base.object_id = object_ids[i] || '0';
-        polygon.base.style = styles[style_indexs[i]];
-        polygon.base.classes = JSON.parse(classes[class_indexs[i]]);
+        if (object_ids && object_ids.length) {
+          polygon.base.object_id = object_ids[i] || '0';
+        }
+        if (styles && styles.length && style_indexs && style_indexs.length) {
+          polygon.base.style = styles[style_indexs[i]] || {};
+        }
+        if (classes && classes.length && class_indexs && class_indexs.length) {
+          polygon.base.classes = JSON.parse(classes[class_indexs[i]]);
+        }
+        if (subcategories && subcategories.length) {
+          polygon.base.subcategories = JSON.parse(subcategories[i]);
+        }
+
         primitive.polygons.push(polygon);
       }
       delete primitive.conversion_polygons;
@@ -312,7 +413,8 @@ export const d_conversion_message = message => {
         styles,
         style_indexs,
         classes,
-        class_indexs
+        class_indexs,
+        subcategories
       } = conversion_circles;
       for (let i = 0; i < count; ++i) {
         const circle = {
@@ -330,9 +432,18 @@ export const d_conversion_message = message => {
           circle.high_precision_center = [x, y, z_value];
         }
         circle.radius = radius[i];
-        circle.base.object_id = object_ids[i] || '0';
-        circle.base.style = styles[style_indexs[i]];
-        circle.base.classes = JSON.parse(classes[class_indexs[i]]);
+        if (object_ids && object_ids.length) {
+          circle.base.object_id = object_ids[i] || '0';
+        }
+        if (styles && styles.length && style_indexs && style_indexs.length) {
+          circle.base.style = styles[style_indexs[i]] || {};
+        }
+        if (classes && classes.length && class_indexs && class_indexs.length) {
+          circle.base.classes = JSON.parse(classes[class_indexs[i]]);
+        }
+        if (subcategories && subcategories.length) {
+          circle.base.subcategories = JSON.parse(subcategories[i]);
+        }
         primitive.circles.push(circle);
       }
       delete primitive.conversion_circles;

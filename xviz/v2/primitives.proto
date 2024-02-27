@@ -103,6 +103,7 @@ message Conversion_circle {
     repeated uint32 class_indexs = 8;
     repeated StyleObjectValue styles = 9;
     repeated string classes = 10;
+    repeated string subcategories = 11;
 }
 
 message Conversion_polyline {
@@ -118,6 +119,7 @@ message Conversion_polyline {
     repeated StyleObjectValue styles = 9;
     repeated string classes = 10;
     repeated uint32 point_counts = 11;
+    repeated string subcategories = 12;
 }
 
 message Conversion_polygon {
@@ -133,4 +135,5 @@ message Conversion_polygon {
     repeated StyleObjectValue styles = 9;
     repeated string classes = 10;
     repeated uint32 point_counts = 11;
+    repeated string subcategories = 12;
 }
