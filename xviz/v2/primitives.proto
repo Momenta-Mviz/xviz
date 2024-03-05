@@ -97,13 +97,14 @@ message Conversion_circle {
     repeated string object_ids = 2;
     repeated float centers = 3;
     repeated double high_precision_centers = 4;
-    float z_value = 5;
+    repeated float z_values = 5;
     repeated float radius = 6;
     repeated uint32 style_indexs = 7;
     repeated uint32 class_indexs = 8;
     repeated StyleObjectValue styles = 9;
     repeated string classes = 10;
     repeated string subcategories = 11;
+    repeated double high_precision_z_values = 12;
 }
 
 message Conversion_polyline {
@@ -112,7 +113,7 @@ message Conversion_polyline {
     repeated string object_ids = 2;
     repeated float vertices = 3;
     repeated double high_precision_vertices = 4;
-    float z_value = 5;
+    repeated float z_values = 5;
     repeated float radius = 6;
     repeated uint32 style_indexs = 7;
     repeated uint32 class_indexs = 8;
@@ -120,6 +121,7 @@ message Conversion_polyline {
     repeated string classes = 10;
     repeated uint32 point_counts = 11;
     repeated string subcategories = 12;
+    repeated double high_precision_z_values = 13;
 }
 
 message Conversion_polygon {
@@ -128,7 +130,7 @@ message Conversion_polygon {
     repeated string object_ids = 2;
     repeated float vertices = 3;
     repeated double high_precision_vertices = 4;
-    float z_value = 5;
+    repeated float z_values = 5;
     repeated float radius = 6;
     repeated uint32 style_indexs = 7;
     repeated uint32 class_indexs = 8;
@@ -136,4 +138,5 @@ message Conversion_polygon {
     repeated string classes = 10;
     repeated uint32 point_counts = 11;
     repeated string subcategories = 12;
+    repeated double high_precision_z_values = 13;
 }
