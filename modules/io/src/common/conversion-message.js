@@ -151,22 +151,40 @@ export const conversion_message = message => {
           let point_count = 0;
 
           if (vertices) {
-            vertices?.forEach(point => {
-              point_count++;
-              polyline_obj.vertices.push(point[0]);
-              polyline_obj.vertices.push(point[1]);
-              polyline_obj.z_values.push(point[2]);
-            });
+            //兼容展开的数组形式
+            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array) {
+              vertices?.forEach(point => {
+                point_count++;
+                polyline_obj.vertices.push(point[0]);
+                polyline_obj.vertices.push(point[1]);
+                polyline_obj.z_values.push(point[2]);
+              });
+            } else {
+              for (let i = 0; i < vertices.length; i += 3) {
+                point_count++;
+                polyline_obj.vertices.push(vertices[i]);
+                polyline_obj.vertices.push(vertices[i + 1]);
+                polyline_obj.z_values.push(vertices[i + 2]);
+              }
+            }
           }
 
           if (high_precision_vertices) {
             if (!polyline_obj.high_precision_vertices) polyline_obj.high_precision_vertices = [];
             if (!polyline_obj.high_precision_z_values) polyline_obj.high_precision_z_values = [];
-            high_precision_vertices.forEach(point => {
-              polyline_obj.high_precision_vertices.push(point[0]);
-              polyline_obj.high_precision_vertices.push(point[1]);
-              polyline_obj.high_precision_z_values.push(point[2]);
-            });
+            if (Array.isArray(high_precision_vertices[0]) || high_precision_vertices[0] instanceof Float64Array) {
+              high_precision_vertices.forEach(point => {
+                polyline_obj.high_precision_vertices.push(point[0]);
+                polyline_obj.high_precision_vertices.push(point[1]);
+                polyline_obj.high_precision_z_values.push(point[2]);
+              });
+            } else {
+              for (let i = 0; i < high_precision_vertices.length; i += 3) {
+                polyline_obj.high_precision_vertices.push(high_precision_vertices[i]);
+                polyline_obj.high_precision_vertices.push(high_precision_vertices[i + 1]);
+                polyline_obj.high_precision_z_values.push(high_precision_vertices[i + 2]);
+              }
+            }
           }
           polyline_obj.point_counts.push(point_count);
 
@@ -248,22 +266,41 @@ export const conversion_message = message => {
           polygon_obj.object_ids.push(object_id);
           let point_count = 0;
           if (vertices) {
-            vertices.forEach(point => {
-              point_count++;
-              polygon_obj.vertices.push(point[0]);
-              polygon_obj.vertices.push(point[1]);
-              polygon_obj.z_values.push(point[2]);
-            });
+            if(Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array){
+                vertices.forEach(point => {
+                    point_count++;
+                    polygon_obj.vertices.push(point[0]);
+                    polygon_obj.vertices.push(point[1]);
+                    polygon_obj.z_values.push(point[2]);
+                  });
+            }
+            else{
+                for (let i = 0; i < vertices.length; i += 3) {
+                    point_count++;
+                    polygon_obj.vertices.push(vertices[i]);
+                    polygon_obj.vertices.push(vertices[i + 1]);
+                    polygon_obj.z_values.push(vertices[i + 2]);
+                  }
+            }
           }
 
           if (high_precision_vertices) {
             if (!polygon_obj.high_precision_vertices) polygon_obj.high_precision_vertices = [];
             if (!polygon_obj.high_precision_z_values) polygon_obj.high_precision_z_values = [];
-            high_precision_vertices.forEach(point => {
-              polygon_obj.high_precision_vertices.push(point[0]);
-              polygon_obj.high_precision_vertices.push(point[1]);
-              polygon_obj.high_precision_z_values.push(point[2]);
-            });
+
+            if (Array.isArray(high_precision_vertices[0]) || high_precision_vertices[0] instanceof Float64Array) {
+              high_precision_vertices.forEach(point => {
+                polygon_obj.high_precision_vertices.push(point[0]);
+                polygon_obj.high_precision_vertices.push(point[1]);
+                polygon_obj.high_precision_z_values.push(point[2]);
+              });
+            } else {
+              for (let i = 0; i < high_precision_vertices.length; i += 3) {
+                polygon_obj.high_precision_vertices.push(high_precision_vertices[i]);
+                polygon_obj.high_precision_vertices.push(high_precision_vertices[i + 1]);
+                polygon_obj.high_precision_z_values.push(high_precision_vertices[i + 2]);
+              }
+            }
           }
 
           polygon_obj.point_counts.push(point_count);
