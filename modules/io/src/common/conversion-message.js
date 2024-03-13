@@ -172,7 +172,10 @@ export const conversion_message = message => {
           if (high_precision_vertices) {
             if (!polyline_obj.high_precision_vertices) polyline_obj.high_precision_vertices = [];
             if (!polyline_obj.high_precision_z_values) polyline_obj.high_precision_z_values = [];
-            if (Array.isArray(high_precision_vertices[0]) || high_precision_vertices[0] instanceof Float64Array) {
+            if (
+              Array.isArray(high_precision_vertices[0]) ||
+              high_precision_vertices[0] instanceof Float64Array
+            ) {
               high_precision_vertices.forEach(point => {
                 polyline_obj.high_precision_vertices.push(point[0]);
                 polyline_obj.high_precision_vertices.push(point[1]);
@@ -266,21 +269,20 @@ export const conversion_message = message => {
           polygon_obj.object_ids.push(object_id);
           let point_count = 0;
           if (vertices) {
-            if(Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array){
-                vertices.forEach(point => {
-                    point_count++;
-                    polygon_obj.vertices.push(point[0]);
-                    polygon_obj.vertices.push(point[1]);
-                    polygon_obj.z_values.push(point[2]);
-                  });
-            }
-            else{
-                for (let i = 0; i < vertices.length; i += 3) {
-                    point_count++;
-                    polygon_obj.vertices.push(vertices[i]);
-                    polygon_obj.vertices.push(vertices[i + 1]);
-                    polygon_obj.z_values.push(vertices[i + 2]);
-                  }
+            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array) {
+              vertices.forEach(point => {
+                point_count++;
+                polygon_obj.vertices.push(point[0]);
+                polygon_obj.vertices.push(point[1]);
+                polygon_obj.z_values.push(point[2]);
+              });
+            } else {
+              for (let i = 0; i < vertices.length; i += 3) {
+                point_count++;
+                polygon_obj.vertices.push(vertices[i]);
+                polygon_obj.vertices.push(vertices[i + 1]);
+                polygon_obj.z_values.push(vertices[i + 2]);
+              }
             }
           }
 
@@ -288,7 +290,10 @@ export const conversion_message = message => {
             if (!polygon_obj.high_precision_vertices) polygon_obj.high_precision_vertices = [];
             if (!polygon_obj.high_precision_z_values) polygon_obj.high_precision_z_values = [];
 
-            if (Array.isArray(high_precision_vertices[0]) || high_precision_vertices[0] instanceof Float64Array) {
+            if (
+              Array.isArray(high_precision_vertices[0]) ||
+              high_precision_vertices[0] instanceof Float64Array
+            ) {
               high_precision_vertices.forEach(point => {
                 polygon_obj.high_precision_vertices.push(point[0]);
                 polygon_obj.high_precision_vertices.push(point[1]);
@@ -402,6 +407,10 @@ export const d_conversion_message = message => {
           class_indexs,
           subcategories
         } = conversion_polylines;
+        let v_index = 0,
+        hv_index = 0,
+        z_index = 0,
+        hz_index = 0;
         for (let i = 0; i < count; ++i) {
           const polyline = {
             vertices: [],
@@ -410,9 +419,9 @@ export const d_conversion_message = message => {
           if (vertices && vertices.length) {
             const point_count = point_counts[i];
             for (let k = 0; k < point_count; ++k) {
-              const x = vertices.shift();
-              const y = vertices.shift();
-              const z = z_values.length > 1 ? z_values.shift() : z_values[0];
+              const x = vertices[v_index++];
+              const y = vertices[v_index++];
+              const z = z_values.length > 1 ? z_values[z_index++] : z_values[0];
               polyline.vertices.push(x);
               polyline.vertices.push(y);
               polyline.vertices.push(z);
@@ -422,11 +431,11 @@ export const d_conversion_message = message => {
             const point_count = point_counts[i];
             polyline.high_precision_vertices = [];
             for (let k = 0; k < point_count; ++k) {
-              const x = high_precision_vertices.shift();
-              const y = high_precision_vertices.shift();
+              const x = high_precision_vertices[hv_index++];
+              const y = high_precision_vertices[hv_index++];
               const z =
                 high_precision_z_values.length > 1
-                  ? high_precision_z_values.shift()
+                  ? high_precision_z_values[hz_index++]
                   : high_precision_z_values[0];
               polyline.high_precision_vertices.push(x);
               polyline.high_precision_vertices.push(y);
@@ -467,6 +476,10 @@ export const d_conversion_message = message => {
           class_indexs,
           subcategories
         } = conversion_polygons;
+        let v_index = 0,
+        hv_index = 0,
+        z_index = 0,
+        hz_index = 0;
         for (let i = 0; i < count; ++i) {
           const polygon = {
             vertices: [],
@@ -475,9 +488,9 @@ export const d_conversion_message = message => {
           if (vertices && vertices.length) {
             const point_count = point_counts[i];
             for (let k = 0; k < point_count; ++k) {
-              const x = vertices.shift();
-              const y = vertices.shift();
-              const z = z_values.length > 1 ? z_values.shift() : z_values[0];
+              const x = vertices[v_index++];
+              const y = vertices[v_index++];
+              const z = z_values.length > 1 ? z_values[z_index++] : z_values[0];
               polygon.vertices.push(x);
               polygon.vertices.push(y);
               polygon.vertices.push(z);
@@ -487,11 +500,11 @@ export const d_conversion_message = message => {
             const point_count = point_counts[i];
             polygon.high_precision_vertices = [];
             for (let k = 0; k < point_count; ++k) {
-              const x = high_precision_vertices.shift();
-              const y = high_precision_vertices.shift();
+              const x = high_precision_vertices[hv_index++];
+              const y = high_precision_vertices[hv_index++];
               const z =
                 high_precision_z_values.length > 1
-                  ? high_precision_z_values.shift()
+                  ? high_precision_z_values[hz_index++]
                   : high_precision_z_values[0];
               polygon.high_precision_vertices.push(x);
               polygon.high_precision_vertices.push(y);
@@ -533,23 +546,27 @@ export const d_conversion_message = message => {
           class_indexs,
           subcategories
         } = conversion_circles;
+        let v_index = 0,
+        hv_index = 0,
+        z_index = 0,
+        hz_index = 0;
         for (let i = 0; i < count; ++i) {
           const circle = {
             radius: 0,
             base: {}
           };
           if (centers && centers.length) {
-            const x = centers.shift();
-            const y = centers.shift();
-            const z = z_values.length > 1 ? z_values.shift() : z_values[0];
+            const x = centers[v_index++];
+            const y = centers[v_index++];
+            const z = z_values.length > 1 ? z_values[z_index++] : z_values[0];
             circle.center = [x, y, z];
           }
           if (high_precision_centers && high_precision_centers.length) {
-            const x = high_precision_centers.shift();
-            const y = high_precision_centers.shift();
+            const x = high_precision_centers[hv_index++];
+            const y = high_precision_centers[hv_index++];
             const z =
               high_precision_z_values.length > 1
-                ? high_precision_z_values.shift()
+                ? high_precision_z_values[hz_index++]
                 : high_precision_z_values[0];
             circle.high_precision_center = [x, y, z];
           }
