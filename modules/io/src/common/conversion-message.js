@@ -152,7 +152,7 @@ export const conversion_message = message => {
 
           if (vertices) {
             //兼容展开的数组形式
-            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array) {
+            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array || vertices[0] instanceof Float64Array) {
               vertices?.forEach(point => {
                 point_count++;
                 polyline_obj.vertices.push(point[0]);
@@ -174,7 +174,8 @@ export const conversion_message = message => {
             if (!polyline_obj.high_precision_z_values) polyline_obj.high_precision_z_values = [];
             if (
               Array.isArray(high_precision_vertices[0]) ||
-              high_precision_vertices[0] instanceof Float64Array
+              high_precision_vertices[0] instanceof Float64Array ||
+              high_precision_vertices[0] instanceof Float32Array
             ) {
               high_precision_vertices.forEach(point => {
                 polyline_obj.high_precision_vertices.push(point[0]);
@@ -269,7 +270,7 @@ export const conversion_message = message => {
           polygon_obj.object_ids.push(object_id);
           let point_count = 0;
           if (vertices) {
-            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array) {
+            if (Array.isArray(vertices[0]) || vertices[0] instanceof Float32Array || vertices[0] instanceof Float64Array) {
               vertices.forEach(point => {
                 point_count++;
                 polygon_obj.vertices.push(point[0]);
@@ -292,7 +293,8 @@ export const conversion_message = message => {
 
             if (
               Array.isArray(high_precision_vertices[0]) ||
-              high_precision_vertices[0] instanceof Float64Array
+              high_precision_vertices[0] instanceof Float64Array || 
+              high_precision_vertices[0] instanceof Float32Array
             ) {
               high_precision_vertices.forEach(point => {
                 polygon_obj.high_precision_vertices.push(point[0]);
